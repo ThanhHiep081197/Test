@@ -1,0 +1,165 @@
+﻿@{ 
+    Layout = null;
+}
+
+alo alo
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Kendo UI Snippet</title>
+
+    <link rel="stylesheet" href="https://kendo.cdn.telerik.com/2020.1.219/styles/kendo.default-v2.min.css" />
+
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script src="https://kendo.cdn.telerik.com/2020.1.219/js/angular.min.js"></script>
+    <script src="https://kendo.cdn.telerik.com/2020.1.219/js/kendo.all.min.js"></script>
+</head>
+<body ng-app="KendoDemos">
+    <div ng-controller="RegisterController">
+        <form class="well" align="center">
+            <input ng-model="user.name" name="name" type="text"><br />
+            <input ng-model="user.mobile" name="mobile" type="text"><br />
+            <input ng-model="user.mail" name="mail" type="mail"><br />
+            <input ng-model="user.password" type="password" name="otp"><br /><br />
+            <button type="button" ng-click="signup(user)">Sign Up</button>
+            <a href="#/login">Login</a><br><br>
+        </form>
+    </div>
+
+
+
+
+    <div id="example" ng-controller="MyCtrl">
+        <select id="customers"
+                kendo-drop-down-list style="width: 100%"
+                k-options="customOptions"
+                k-ng-model="Employees.Name">
+        </select>
+
+        <button ng-click='send()'>Submit</button>
+        <br />
+        <br />
+        <br />
+        <div>
+            <kendo-grid options="mainGridOptions">
+            </kendo-grid>
+        </div>
+        <br />
+        <br />
+        <div>
+            <kendo-grid options="mainGridOptions1">
+            </kendo-grid>
+        </div>
+    </div>
+
+    <script>
+        angular.module("KendoDemos", ["kendo.directives"])
+            .controller("MyCtrl", function ($scope) {
+
+                console.log($scope.Employees);
+                $scope.send = function () {
+                    var dataItem = $scope.selectedSport;
+
+                    console.log(dataItem);
+                };
+
+                $scope.student = {
+                    transport: {
+                        read: {
+                            dataType: "json",
+                            url: "/Home/ListStudent",
+                            type: "POST"
+                        }
+                    }
+                };
+                $scope.customOptions = {
+                    dataSource: $scope.student,
+                    dataTextField: "Name",
+                    dataValueField: "EmployeeID",
+                }
+
+                $scope.mainGridOptions = {
+                    dataSource: {
+                        transport: {
+                            read: {
+                                url: "/Home/StudentByID/",
+                                dataType: "json",
+                                type: "POST",
+                                data: { id: 1 }
+                            }
+
+                        }
+                    },
+                    columns: [{
+                        field: "EmployeeID",
+                        title: "Mã NV",
+                        width: "180px"
+                    }, {
+                        field: "Name",
+                        title: "Name",
+                        width: "120px"
+                    }, {
+                        field: "Position",
+                        width: "120px"
+                    }, {
+                        field: "Age",
+                        width: "120px"
+                    },
+                    {
+                        field: "Salary",
+                        width: "120px"
+                    },
+                    ]
+                };
+
+
+                //$scope.mainGridOptions1 = {
+                //    dataSource: {
+                //        transport: {
+                //            read: {
+                //                url:"/Home/ListStudent",
+                //                dataType: "json",
+                //                type: "POST"
+                //            }
+
+                //        }
+                //    },
+                //    columns: [{
+                //        field: "EmployeeID",
+                //        title: "Mã NV",
+                //        width: "180px"
+                //        },{
+                //        field: "Name",
+                //        title: "Name",
+                //        width: "120px"
+                //        },{
+                //        field: "Position",
+                //        width: "120px"
+                //        },{
+                //        field: "Age",
+                //        width: "120px"
+                //        },
+                //        {
+                //        field: "Salary",
+                //        width: "120px"
+                //        },
+                //    ]
+                //};
+            })
+            .controller("RegisterController", function ($scope) {
+                $scope.user = {
+                   name: '',
+                   mobile: '',
+                   mail: '',
+                   password: ''
+                };
+                $scope.signup = function (user) {
+                    console.log($scope.user);
+                }
+                console.log($scope.user);
+
+            })
+    </script>
+</body>
+</html>
